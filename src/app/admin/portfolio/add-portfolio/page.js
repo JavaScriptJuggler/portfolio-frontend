@@ -2,11 +2,12 @@
 import Spinner from '@/app/components/admin_components/Spinner';
 import AdminLayout from '@/app/components/layouts/AdminLayout';
 import { LoadingContext } from '@/context/Loadingbar';
-import JoditEditor from 'jodit-react';
 import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { toast } from 'react-toastify';
+import dynamic from 'next/dynamic';
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 function page() {
     const [isLoading, setisLoading] = useState(false);
@@ -99,7 +100,6 @@ function page() {
                                         value={content}
                                         tabIndex={1}
                                         onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-                                        onChange={newContent => { }}
                                     />
                                 </div>
                                 <div className="form-group mt-2">

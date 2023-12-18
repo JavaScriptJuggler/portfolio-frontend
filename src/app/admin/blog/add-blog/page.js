@@ -2,10 +2,11 @@
 import Spinner from '@/app/components/admin_components/Spinner';
 import AdminLayout from '@/app/components/layouts/AdminLayout';
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import JoditEditor from 'jodit-react';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { LoadingContext } from '@/context/Loadingbar';
+import dynamic from 'next/dynamic';
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 function page() {
     const [isLoading, setisLoading] = useState(false);
