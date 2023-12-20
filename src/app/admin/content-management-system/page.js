@@ -94,10 +94,10 @@ function page() {
         })
             .then(async response => {
                 let fetchedData = await response.json();
-                if (fetchedData.length) {
+                if (fetchedData) {
                     if (fetchedData['hero_settings']) {
-                        const { name, sub_title, hero_image, resume_file } = fetchedData['hero_settings'][0];
-                        setheroSection({ name, subtitle: sub_title, heroImage: hero_image, resumeFile: resume_file });
+                        const { name, sub_title} = fetchedData['hero_settings'][0];
+                        setheroSection({ name, subtitle: sub_title });
                     }
                 }
                 setLoadingBar(30);
