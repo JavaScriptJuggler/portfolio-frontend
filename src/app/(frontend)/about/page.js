@@ -57,7 +57,7 @@ function page() {
                         </ul>
                     </div>
                     <div className="page-hero-content mx-auto max-w-[768px] text-center">
-                        <h1 className="mb-5 mt-8">About our company</h1>
+                        <h1 className="mb-5 mt-8">About Myself</h1>
                         <p>
                             Donec sollicitudin molestie malesda. Donec sollitudin molestie
                             malesuada. Mauris pellentesque nec, egestas non nisi. Cras ultricies

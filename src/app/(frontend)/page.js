@@ -1,4 +1,5 @@
-import React from 'react';
+"use client";
+import React, { useContext } from 'react';
 import UserLayout from '../components/layouts/UserLayout';
 import bannerImage from '../assets/frontend_assets/images/banner-img.png'
 import bannerImageShare from '../assets/frontend_assets/images/banner-shape.svg'
@@ -11,11 +12,13 @@ import checks from '../assets/frontend_assets/images/icons/checkmark-circle.svg'
 import shape from '../assets/frontend_assets/images/shape.svg'
 import collaborationImage from '../assets/frontend_assets/images/collaboration.png'
 import problemSolving from '../assets/frontend_assets/images/intro-thumbnail.png'
-
 import Image from 'next/image';
-import Footer from '../components/frontend_component/Footer';
 import Services from '../components/frontend_component/Services';
+import { LoadingContext } from '@/context/Loadingbar';
+
 function page() {
+  const { setLoadingBar } = useContext(LoadingContext);
+  setLoadingBar(100);
   return (
     <UserLayout>
       <section className="banner relative">
@@ -225,7 +228,7 @@ function page() {
             </div>
           </div>
         </div>
-      </section>     
+      </section>
     </UserLayout>
   );
 }
