@@ -9,7 +9,12 @@ const nextConfig = {
                 },
             ];
         } else {
-            return [];
+            return [
+                {
+                    source: '/api/:path*',
+                    destination: 'https://soumya-manna-api.000webhostapp.com/api/:path*',
+                },
+            ];
         }
     },
 }
