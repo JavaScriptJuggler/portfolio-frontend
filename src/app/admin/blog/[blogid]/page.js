@@ -14,6 +14,7 @@ function page({ params }) {
   const [blogName, setblogName] = useState("");
   const [stortDescription, setstortDescription] = useState("");
   const [content, setContent] = useState('');
+  const [thumbnel, setThumbnel] = useState(null);
   const { setLoadingBar } = useContext(LoadingContext);
   useEffect(() => {
     setLoadingBar(40);
@@ -40,18 +41,19 @@ function page({ params }) {
   /* edit request */
   const submitBlog = () => {
     setisLoading(true);
+    let formData = new FormData();
+    formData.append('blog_name', blogName);
+    formData.append('blog_content', content);
+    formData.append('short_description', stortDescription);
+    formData.append('thumbnel', thumbnel);
+    formData.append('blog_id', blogId);
     fetch(process.env.NEXT_PUBLIC_API_URL + '/saveBlog', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': `bearer ${Cookies.get('token')}`,
       },
-      body: JSON.stringify({
-        "blog_name": blogName,
-        "blog_content": content,
-        "short_description": stortDescription,
-        "blog_id": blogId,
-      })
+      body: formData
     })
       .then(async response => {
         let getResponse = await response.json();
@@ -80,6 +82,10 @@ function page({ params }) {
             <div className="form-group mt-2">
               <label htmlFor="" className="form-label">Blog Short Description</label>
               <input type="text" value={stortDescription} onChange={(e) => { setstortDescription(e.target.value) }} name="short_description" id="blog_name" className="form-control" />
+            </div>
+            <div className="form-group mt-2">
+              <label htmlFor="" className="form-label">Thumbnel Image</label>
+              <input type="file" onChange={(e) => { setThumbnel(e.target.files[0]) }} name="short_description" id="blog_name" className="form-control" />
             </div>
             <div className="form-group mt-2">
               <label htmlFor="" className="form-label" >Blog</label>

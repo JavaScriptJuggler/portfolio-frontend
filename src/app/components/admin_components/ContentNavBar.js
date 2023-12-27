@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import LoadingBar from 'react-top-loading-bar'
 import { LoadingContext } from '@/context/Loadingbar';
+import Link from 'next/link';
 function ContentNavBar() {
     const router = useRouter();
     const logoutUser = (e) => {
@@ -105,8 +106,8 @@ function ContentNavBar() {
                             <span className="d-none d-lg-inline-flex">John Doe</span>
                         </a>
                         <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" className="dropdown-item">My Profile</a>
-                            <a href="#" className="dropdown-item">Settings</a>
+                            <Link href="/admin/profile" className="dropdown-item">My Profile</Link>
+                            {/* <a href="#" className="dropdown-item">Settings</a> */}
                             <a href="#" onClick={(e) => { logoutUser(e) }} className="dropdown-item">Log Out</a>
                         </div>
                     </div>

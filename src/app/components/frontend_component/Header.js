@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LoadingBar from 'react-top-loading-bar';
 import { LoadingContext } from '@/context/Loadingbar';
+import { ResumeContext } from '@/context/Resume';
 
 function Header() {
     const { loadingBar, setLoadingBar } = useContext(LoadingContext);
+    const { resumeLink } = useContext(ResumeContext);
     let pathName = usePathname();
     return (
         <>
@@ -16,13 +18,14 @@ function Header() {
                 color='#fe6019'
                 height={'3px'}
                 progress={loadingBar}
-                // onLoaderFinished={() => setLoadingBar(0)}
+            // onLoaderFinished={() => setLoadingBar(0)}
             />
             <header className="header">
                 <nav className="navbar container">
                     <div className="order-0">
                         <Link href="/">
-                            <Image src={logo} height="30" width="147" alt="logo" />
+                            <span style={{ fontSize: '35px', width: '500', color: 'black', fontFamily: 'Dancing Script' }}>Soumya Manna</span>
+                            {/* <Image src={logo} height="30" width="147" alt="logo" /> */}
                         </Link>
                     </div>
                     <input id="nav-toggle" type="checkbox" className="hidden" />
@@ -59,9 +62,18 @@ function Header() {
                         <li className="nav-item">
                             <Link href="/about" className={`nav-link ${pathName == '/about' ? 'active' : ""}`}>About</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link href="/blogs" className={`nav-link ${pathName.startsWith('/blogs') ? 'active' : ""}`}>Blogs</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href="/portfolio" className={`nav-link ${pathName.startsWith('/portfolio') ? 'active' : ""}`}>Portfolio</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href="/contact" className={`nav-link ${pathName == '/contact' ? 'active' : ""}`}>Contact</Link>
+                        </li>
                     </ul>
                     <div className="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-                        <a className="btn btn-white btn-sm" href="signin.html">Download My Resume</a>
+                        <a className="btn btn-white btn-sm" href={resumeLink}>Download My Resume</a>
                     </div>
                 </nav>
             </header>

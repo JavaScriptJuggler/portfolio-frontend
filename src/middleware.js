@@ -11,6 +11,7 @@ export function middleware(request) {
     '/admin/portfolio',
     '/admin/portfolio/add-portfolio',
     /^\/admin\/portfolio\/.*$/,
+    '/admin/profile',
   ];
   const token = request.cookies.get('token');
   /* route protection */

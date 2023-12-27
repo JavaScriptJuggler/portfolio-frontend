@@ -236,8 +236,8 @@ function page() {
                 if (getData) {
                     const { heading, description } = getData;
                     setctaSection({ heading, description })
+                    setLoadingBar(100);
                 }
-                setLoadingBar(100);
             })
             .catch(error => console.log(error));
     }

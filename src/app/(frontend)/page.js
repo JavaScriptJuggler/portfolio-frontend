@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserLayout from '../components/layouts/UserLayout';
 import bannerImage from '../assets/frontend_assets/images/banner-img.png'
 import bannerImageShare from '../assets/frontend_assets/images/banner-shape.svg'
@@ -15,10 +15,33 @@ import problemSolving from '../assets/frontend_assets/images/intro-thumbnail.png
 import Image from 'next/image';
 import Services from '../components/frontend_component/Services';
 import { LoadingContext } from '@/context/Loadingbar';
+import { ResumeContext } from '@/context/Resume';
 
 function page() {
   const { setLoadingBar } = useContext(LoadingContext);
-  setLoadingBar(100);
+  const [hero, setHero] = useState({ "name": "", "sub_title": "", "hero_image": "", "resume_link": "" });
+  const [servicesCms, setServicesCms] = useState({ 'heading': "", 'description': "" });
+  const [services, setServices] = useState([]);
+  const [cta, setCta] = useState({ heading: "", description: "" });
+  const { resumeLink } = useContext(ResumeContext);
+  const getHeroData = () => {
+    setLoadingBar(50);
+    fetch(process.env.NEXT_PUBLIC_API_URL + '/getHomeData')
+      .then(async response => {
+        let getData = await response.json()
+        setHero(getData.hero);
+        setServicesCms(getData.services.cms);
+        setServices(getData.services.services);
+        let { heading, description } = getData.cta;
+        setCta({ heading, description });
+        setLoadingBar(100);
+      })
+      .catch(error => console.log(error));
+  }
+
+  useEffect(() => {
+    getHeroData();
+  }, []);
   return (
     <UserLayout>
       <section className="banner relative">
@@ -26,18 +49,17 @@ function page() {
           <div className="row items-center">
             <div className="lg:col-6">
               <h1 className="banner-title">
-                Soumya Manna
+                {hero.name || ""}
               </h1>
-              <p className="mt-6">
-                Passionate software developer dedicated to crafting seamless digital solutions. Precision coder with a commitment to excellence, transforming innovative ideas into functional and elegant software for enhanced user experiences.
-              </p>
-              <a className="btn btn-white mt-8" href="#">Download My Resume</a>
+              <p className="mt-6">{hero.sub_title || ""}</p>
+              <a target='_blank' className="btn btn-white mt-8" href={resumeLink || ""}>Download My Resume</a>
             </div>
             <div className="lg:col-6">
-              <Image
+              <img
                 className="w-full object-contain"
-                src={bannerImage}
+                src={hero.hero_image || ""}
                 alt=""
+                width={'auto'}
               />
             </div>
           </div>
@@ -59,19 +81,16 @@ function page() {
         <div className="container">
           <div className="row justify-between text-center lg:text-start">
             <div className="lg:col-5">
-              <h2>The Highlighting Part Of Our Solution</h2>
+              <h2>{servicesCms.heading || ""}</h2>
             </div>
             <div className="mt-6 lg:col-5 lg:mt-0">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas
-                Werat viverra id et aliquet. vulputate egestas sollicitudin .
-              </p>
+              <p>{servicesCms.description || ""}</p>
             </div>
           </div>
           <div
             className="key-feature-grid mt-10 grid grid-cols-2 gap-7 md:grid-cols-3 xl:grid-cols-4"
           >
-            <Services />
+            <Services services={services} />
           </div>
         </div>
       </section>
@@ -214,15 +233,11 @@ function page() {
             <div className="lg:col-11">
               <div className="row">
                 <div className="lg:col-7">
-                  <h2 className="h1 text-white">Helping teams in the world with focus</h2>
+                  <h2 className="h1 text-white">{cta.heading}</h2>
                   <a className="btn btn-white mt-8" href="#">Download My Resume</a>
                 </div>
                 <div className="mt-8 lg:col-5 lg:mt-0">
-                  <p className="text-white">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                    egestas Werat viverra id et aliquet. vulputate egestas
-                    sollicitudin .
-                  </p>
+                  <p className="text-white">{cta.description}</p>
                 </div>
               </div>
             </div>

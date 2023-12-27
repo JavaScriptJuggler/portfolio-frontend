@@ -1,4 +1,5 @@
 import { LoadingContextProvider } from "@/context/Loadingbar"
+import { ResumeContextProvider } from "@/context/Resume"
 export const metadata = {
   title: 'Soumya Manna',
   description: 'this is the portfolio of soumya manna. I am a software developer',
@@ -18,11 +19,14 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap"
           rel="stylesheet"
         />
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Pacifico&family=Slabo+27px&display=swap" rel="stylesheet"></link>
       </head>
       <body className="">
-        <LoadingContextProvider>
-          {children}
-        </LoadingContextProvider>
+        <ResumeContextProvider>
+          <LoadingContextProvider>
+            {children}
+          </LoadingContextProvider>
+        </ResumeContextProvider>
       </body>
     </html>
   )

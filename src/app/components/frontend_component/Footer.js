@@ -1,27 +1,48 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import logo from '../../assets/frontend_assets/images/logo.svg'
 import Image from 'next/image';
+import Link from 'next/link';
 
 function Footer() {
+    const [socialLinks, setsocialLinks] = useState({ facebook: '', xhandle: '', linkdin: '', whatsapp: '' });
+    const getSocialLinks = () => {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/getSocialLinks`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(async response => {
+                let getResponse = await response.json();
+                const { facebook, xhandle, linkdin, whatsapp } = getResponse;
+                setsocialLinks({ facebook, xhandle, linkdin, whatsapp });
+            })
+            .catch(error => console.log(error));
+    }
+    useEffect(() => {
+        getSocialLinks();
+    }, []);
     return (
         <footer className="footer bg-theme-light/50">
             <div className="container">
                 <div className="row gx-5 pb-10 pt-[52px]">
                     <div className="col-12 mt-12 md:col-6 lg:col-3">
-                        <a href="index.html">
-                            <Image src={logo} alt="" />
-                        </a>
+                        <Link href="/">
+                            <span style={{ fontFamily: 'Dancing Script', fontSize: '30px', width: '500', color: 'black' }}>Soumya Manna</span>
+                        </Link>
                         <p className="mt-6">
-                            Lorem ipsum dolor sit sed dmi amet, consectetur adipiscing. Cdo
-                            tellus, sed condimentum volutpat.
+                            Full-stack developer skilled in front-end (HTML, CSS, JS) and back-end (PHP, Laravel). Expert in seamless solutions.
                         </p>
                     </div>
                     <div className="col-12 mt-12 md:col-6 lg:col-3">
                         <h6>Socials</h6>
-                        <p>themefisher@gmail.com</p>
+                        <p>
+                            <a href='mailto:soumyamanna180898@gmail.com'>soumyamanna180898@gmail.com</a>
+                        </p>
                         <ul className="social-icons mt-4 lg:mt-6">
                             <li>
-                                <a href="#">
+                                <a target="_blank" href={socialLinks.facebook}>
                                     <svg
                                         width="19"
                                         height="21"
@@ -37,23 +58,31 @@ function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <svg
-                                        width="19"
-                                        height="15"
-                                        viewBox="0 0 19 15"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M16.3308 3.92621C17.0129 3.42889 17.6269 2.83209 18.1044 2.13583C17.4904 2.40108 16.7742 2.60001 16.0579 2.66632C16.8083 2.2353 17.354 1.5722 17.6269 0.743317C16.9447 1.14118 16.1603 1.43958 15.3758 1.60535C14.6937 0.909093 13.7728 0.51123 12.7496 0.51123C10.7714 0.51123 9.16837 2.06952 9.16837 3.99252C9.16837 4.25777 9.20248 4.52301 9.27069 4.78825C6.3034 4.62247 3.64307 3.22995 1.86952 1.14118C1.56256 1.63851 1.39202 2.2353 1.39202 2.8984C1.39202 4.09199 2.00595 5.15296 2.99504 5.7829C2.41523 5.74975 1.83541 5.61713 1.35792 5.35189V5.38504C1.35792 7.07596 2.58576 8.46847 4.22289 8.80002C3.95003 8.86633 3.60897 8.93265 3.302 8.93265C3.06326 8.93265 2.85862 8.89949 2.61987 8.86633C3.06326 10.2589 4.39342 11.2535 5.96233 11.2867C4.73449 12.215 3.19968 12.7786 1.52845 12.7786C1.22149 12.7786 0.948636 12.7455 0.675781 12.7123C2.24469 13.707 4.12057 14.2706 6.16698 14.2706C12.7496 14.2706 16.3308 8.99896 16.3308 4.39039C16.3308 4.22461 16.3308 4.09199 16.3308 3.92621Z"
-                                            fill="#222222"
-                                        />
+                                <a target="_blank" href={socialLinks.xhandle}>
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                        width="19" height="15" viewBox="0 0 512.000000 512.000000"
+                                        preserveAspectRatio="xMidYMid meet">
+
+                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                                            fill="#000000" stroke="none">
+                                            <path d="M2315 5109 c-800 -83 -1501 -518 -1927 -1196 -604 -961 -490 -2237
+                                    274 -3068 425 -462 951 -737 1583 -827 119 -17 512 -16 635 1 622 86 1148 360
+                                    1572 820 349 378 572 862 650 1406 17 118 17 512 0 630 -59 416 -191 769 -410
+                                    1099 -92 140 -185 254 -315 385 -399 404 -893 653 -1462 737 -123 18 -478 26
+                                    -600 13z m27 -1592 c207 -302 379 -549 382 -550 3 -1 218 246 479 548 l473
+                                    550 128 3 c75 1 126 -1 124 -7 -1 -5 -123 -148 -269 -317 -146 -170 -390 -454
+                                    -542 -631 l-277 -321 531 -774 c292 -425 560 -815 596 -865 l64 -93 -439 0
+                                    -439 0 -398 580 c-219 319 -401 580 -404 579 -3 0 -229 -260 -501 -577 l-496
+                                    -577 -132 -3 -132 -3 574 668 574 667 -32 46 c-36 49 -1071 1557 -1101 1603
+                                    l-17 27 438 -2 439 -3 377 -548z"/>
+                                            <path d="M2359 2558 l918 -1313 196 -3 c108 -1 197 1 197 5 0 5 -411 595 -913
+                                    1313 l-913 1305 -202 3 -201 2 918 -1312z"/>
+                                        </g>
                                     </svg>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a target="_blank" href={socialLinks.linkdin}>
                                     <svg
                                         width="19"
                                         height="16"
@@ -69,18 +98,31 @@ function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <svg
-                                        width="19"
-                                        height="18"
-                                        viewBox="0 0 17 18"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M15.3829 10.554C15.4875 10.0381 15.5573 9.48523 15.5573 8.9324C15.5573 4.76772 12.3483 1.37701 8.40687 1.37701C7.88367 1.37701 7.36047 1.45072 6.87215 1.56129C6.20943 1.00846 5.37231 0.676758 4.50031 0.676758C2.33775 0.676758 0.59375 2.55639 0.59375 4.80458C0.59375 5.76282 0.87279 6.64735 1.39599 7.34761C1.29135 7.86359 1.22159 8.41642 1.22159 8.9324C1.22159 13.1339 4.43055 16.5246 8.37199 16.5246C8.89518 16.5246 9.41838 16.4509 9.9067 16.3404C10.5694 16.8932 11.4065 17.188 12.2785 17.188C14.4411 17.188 16.1851 15.3453 16.1851 13.0602C16.22 12.1388 15.9061 11.2543 15.3829 10.554ZM8.61615 13.9447C6.31407 13.9447 4.39567 12.8759 4.39567 11.5491C4.39567 10.9595 4.70959 10.4066 5.44207 10.4066C6.52335 10.4066 6.62799 12.0651 8.51151 12.0651C9.3835 12.0651 9.97646 11.6597 9.97646 11.1069C9.97646 10.4066 9.41838 10.2961 8.51151 10.0749C6.34895 9.48523 4.39567 9.2641 4.39567 6.86849C4.39567 4.65716 6.45359 3.84633 8.19759 3.84633C10.116 3.84633 12.0693 4.65716 12.0693 5.91024C12.0693 6.53679 11.6856 7.08962 11.0229 7.08962C10.0462 7.08962 10.0113 5.83653 8.40687 5.83653C7.49999 5.83653 6.94191 6.09452 6.94191 6.68421C6.94191 7.38446 7.67439 7.45818 9.34862 7.90044C10.7787 8.23214 12.5227 8.85869 12.5227 10.7383C12.5227 12.9128 10.5345 13.9447 8.61615 13.9447Z"
-                                            fill="#222222"
-                                        />
+                                <a target="_blank" href={socialLinks.whatsapp}>
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                        width="19" height="15" viewBox="0 0 512.000000 512.000000"
+                                        preserveAspectRatio="xMidYMid meet">
+
+                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                                            fill="#000000" stroke="none">
+                                            <path d="M2247 4995 c-1043 -126 -1913 -881 -2167 -1880 -59 -234 -74 -356
+                                    -74 -610 -1 -129 5 -259 13 -315 108 -783 536 -1431 1212 -1841 206 -124 479
+                                    -239 570 -239 45 0 55 4 85 34 22 22 34 44 35 63 2 40 -3 448 -4 449 -1 1 -42
+                                    -5 -92 -13 -108 -17 -273 -12 -360 12 -115 30 -202 79 -279 158 -64 63 -81 90
+                                    -144 217 -83 169 -138 244 -230 308 -142 100 -165 144 -87 171 31 10 54 11
+                                    103 3 136 -22 259 -109 355 -251 120 -178 219 -247 389 -271 78 -11 185 1 285
+                                    31 71 22 71 22 98 131 18 70 67 163 111 209 l25 26 -63 7 c-103 12 -293 55
+                                    -386 88 -168 59 -276 123 -395 237 -222 212 -326 520 -314 931 4 141 9 178 31
+                                    255 36 121 88 223 164 323 48 64 60 86 53 100 -21 40 -41 168 -41 261 0 107
+                                    18 219 50 317 25 73 38 78 145 63 136 -19 330 -99 506 -209 71 -45 80 -48 111
+                                    -39 84 24 309 59 450 69 228 17 538 -10 737 -64 l54 -15 91 56 c175 108 358
+                                    183 495 203 108 15 117 10 145 -79 13 -42 29 -111 36 -154 17 -103 8 -293 -17
+                                    -372 l-19 -60 46 -56 c150 -187 212 -376 211 -645 -1 -671 -304 -1054 -930
+                                    -1179 -64 -12 -142 -26 -174 -30 l-58 -7 35 -38 c43 -48 88 -135 112 -216 15
+                                    -51 18 -122 23 -504 5 -334 9 -451 19 -467 17 -31 63 -53 108 -53 93 0 453
+                                    163 659 297 165 109 299 219 435 359 385 395 615 869 691 1424 20 144 17 507
+                                    -5 655 -172 1140 -1081 2015 -2234 2150 -154 18 -464 18 -615 0z"/>
+                                        </g>
                                     </svg>
                                 </a>
                             </li>
@@ -90,23 +132,23 @@ function Footer() {
                         <h6>Quick Links</h6>
                         <ul>
                             <li>
-                                <a href="about.html">About</a>
+                                <Link href="/about">About</Link>
                             </li>
                             <li>
-                                <a href="#">Category</a>
+                                <Link href="/blogs">Blogs</Link>
                             </li>
                             <li>
-                                <a href="#">Testimonial</a>
+                                <Link href="/portfolio">Portfolio</Link>
                             </li>
                             <li>
-                                <a href="contact.html">Contact</a>
+                                <Link href="/contact">Contact</Link>
                             </li>
                         </ul>
                     </div>
                     <div className="col-12 mt-12 md:col-6 lg:col-3">
                         <h6>Location & Contact</h6>
-                        <p>2118 Thornridge Cir. Syracuse, Connecticut 35624</p>
-                        <p>(704) 555-0127</p>
+                        <p>102,Elias Road,Agarpara,Kolkata 700058</p>
+                        <p>+91 7450892149</p>
                     </div>
                 </div>
             </div>
@@ -114,7 +156,7 @@ function Footer() {
                 <div
                     className="footer-copyright mx-auto border-t border-border pb-10 pt-7 text-center"
                 >
-                    <p>Designed And Developed by <a href="https://themefisher.com" target="_blank">Themefisher</a></p>
+                    <p>Designed And Developed by Soumya Manna</p>
                 </div>
             </div>
         </footer>
