@@ -1,11 +1,47 @@
+"use client";
 import HeaderImages from '@/app/components/frontend_component/HeaderImages';
 import UserLayout from '@/app/components/layouts/UserLayout';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import comtactImage from '../../assets/frontend_assets/images/contact-img.png'
 import shape from '../../assets/frontend_assets/images/shape-2.svg'
+import { toast } from 'react-toastify';
 
 function page() {
+    const [contactInfo, setContactInfo] = useState({ name: "", email: "", message: "" });
+    const handleChange = (e) => {
+        let { name, value } = e.target;
+        setContactInfo((prevHeroSection) => ({
+            ...prevHeroSection,
+            [name]: value,
+        }));
+    }
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        document.querySelector('#submitBtn').setAttribute('disabled', 'disabled')
+        document.querySelector('#submitBtn').setAttribute('value', 'Wait Please..Sending Mail')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/sendmessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(contactInfo)
+        })
+            .then(async response => {
+                let getResponse = await response.json();
+                if (getResponse.status) {
+                    toast.success(getResponse.message);
+                }
+                else
+                    toast.danger(getResponse.message);
+
+                setContactInfo({ name: "", email: "", message: "" });
+                document.querySelector('#submitBtn').removeAttribute('disabled')
+                document.querySelector('#submitBtn').setAttribute('value', 'Submit')
+            })
+            .catch(error => console.log(error));
+    }
     return (
         <UserLayout>
             <HeaderImages />
@@ -60,46 +96,50 @@ function page() {
                             </div>
                         </div>
                         <div className="md:col-6 md:order-1">
-                            <form className="lg:max-w-[484px]" action="#" method="POST">
+                            <form className="lg:max-w-[484px]" onSubmit={(e) => { submitForm(e) }} id='contactForm'>
                                 <div className="form-group mb-5">
-                                    <label className="form-label" for="name">Full Name</label>
+                                    <label className="form-label" htmlFor="name">Full Name</label>
                                     <input
                                         className="form-control"
                                         type="text"
                                         id="name"
+                                        name="name"
+                                        onChange={(e) => { handleChange(e) }}
+                                        value={contactInfo.name}
                                         placeholder="Your Full Name"
+                                        required
                                     />
                                 </div>
                                 <div className="form-group mb-5">
-                                    <label className="form-label" for="eamil">Email Adrdess</label>
+                                    <label className="form-label" htmlFor="eamil">Email Adrdess</label>
                                     <input
                                         className="form-control"
-                                        type="text"
+                                        type="email"
                                         id="email"
+                                        name="email"
+                                        onChange={(e) => { handleChange(e) }}
+                                        value={contactInfo.email}
                                         placeholder="Your  Email Address"
+                                        required
                                     />
                                 </div>
                                 <div className="form-group mb-5">
-                                    <label className="form-label" for="reason">reason/purpose</label>
-                                    <select name="reason" id="reason" className="form-select" required>
-                                        <option value="">Select reason/purpose</option>
-                                        <option value="investment plane">Investment Plan</option>
-                                        <option value="investment plane-2">Investment Plan 2</option>
-                                        <option value="investment plane-3">Investment Plan 3</option>
-                                    </select>
-                                </div>
-                                <div className="form-group mb-5">
-                                    <label className="form-label" for="message">Message Here</label>
+                                    <label className="form-label" htmlFor="message">Message Here</label>
                                     <textarea
                                         className="form-control h-[150px]"
                                         id="message"
                                         cols="30"
                                         rows="10"
+                                        name="message"
+                                        onChange={(e) => { handleChange(e) }}
+                                        value={contactInfo.message}
+                                        required
                                     ></textarea>
                                 </div>
                                 <input
                                     className="btn btn-primary block w-full"
                                     type="submit"
+                                    id='submitBtn'
                                     value="Send Message"
                                 />
                             </form>
